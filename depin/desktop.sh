@@ -68,70 +68,70 @@ setup_rivalz_ai() {
     sudo chown $USER:$USER /home/$USER/Documents/rClient-latest.AppImage
     echo "Rivalz.ai rClient installed successfully."
 }
-# Function to allow user to choose options
-user_options() {
-    while true; do
-        echo "Please select the installation option:"
-        echo "1. Install only Chrome (for nodepay mining)"
-        echo "2. Download Rivalz.ai client to the Documents directory (for Rivalz.ai mining)"
-        echo "3. Install both"
-        read -p "Enter your choice (1, 2, or 3): " option
-        case $option in
-            1)
-                get_credentials
-                install_desktop
-                setup_chrome
-                break
-                ;;
-            2)
-                get_credentials
-                install_desktop
-                setup_rivalz_ai
-                break
-                ;;
-            3)
-                get_credentials
-                install_desktop
-                setup_chrome
-                setup_rivalz_ai
-                break
-                ;;
-            *)
-                echo "Invalid input, please try again."
-                ;;
-        esac
-    done
-}
 # # Function to allow user to choose options
 # user_options() {
-#     echo "Please select the installation option:"
-#     echo "1. Install only Chrome (for nodepay mining)"
-#     echo "2. Download Rivalz.ai client to the Documents directory (for Rivalz.ai mining)"
-#     echo "3. Install both"
-#     read -p "Enter your choice (1, 2, or 3): " option
-#     case $option in
-#         1)
-#             get_credentials
-#             install_desktop
-#             setup_chrome
-#             ;;
-#         2)
-#             get_credentials
-#             install_desktop
-#             setup_rivalz_ai
-#             ;;
-#         3)
-#             get_credentials
-#             install_desktop
-#             setup_chrome
-#             setup_rivalz_ai
-#             ;;
-#         *)
-#             echo "Invalid input, script exiting."
-#             exit 1
-#             ;;
-#     esac
+#     while true; do
+#         echo "Please select the installation option:"
+#         echo "1. Install only Chrome (for nodepay mining)"
+#         echo "2. Download Rivalz.ai client to the Documents directory (for Rivalz.ai mining)"
+#         echo "3. Install both"
+#         read -p "Enter your choice (1, 2, or 3): " option
+#         case $option in
+#             1)
+#                 get_credentials
+#                 install_desktop
+#                 setup_chrome
+#                 break
+#                 ;;
+#             2)
+#                 get_credentials
+#                 install_desktop
+#                 setup_rivalz_ai
+#                 break
+#                 ;;
+#             3)
+#                 get_credentials
+#                 install_desktop
+#                 setup_chrome
+#                 setup_rivalz_ai
+#                 break
+#                 ;;
+#             *)
+#                 echo "Invalid input, please try again."
+#                 ;;
+#         esac
+#     done
 # }
+# Function to allow user to choose options
+user_options() {
+    echo "Please select the installation option:"
+    echo "1. Install only Chrome (for nodepay mining)"
+    echo "2. Download Rivalz.ai client to the Documents directory (for Rivalz.ai mining)"
+    echo "3. Install both"
+    read -p "Enter your choice (1, 2, or 3): " option < /dev/tty
+    case $option in
+        1)
+            get_credentials
+            install_desktop
+            setup_chrome
+            ;;
+        2)
+            get_credentials
+            install_desktop
+            setup_rivalz_ai
+            ;;
+        3)
+            get_credentials
+            install_desktop
+            setup_chrome
+            setup_rivalz_ai
+            ;;
+        *)
+            echo "Invalid input, script exiting."
+            exit 1
+            ;;
+    esac
+}
 
 # Execute functions
 display_social_media
