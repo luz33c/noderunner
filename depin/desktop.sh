@@ -95,6 +95,8 @@ user_options() {
 }
 
 # Execute functions
+display_social_media
 get_credentials
 install_desktop
 user_options
+display_social_media
