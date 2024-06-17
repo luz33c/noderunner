@@ -1,17 +1,18 @@
 #!/bin/bash
 
 # 定义获取用户名和密码的函数
+# 定义获取用户名和密码的函数
 get_credentials() {
     echo "Please enter a username for remote desktop access:"
-    read USER
+    read USER < /dev/tty
     echo "Please enter a password for remote desktop access:"
-    read -s PASSWORD
+    read -s PASSWORD < /dev/tty
     echo ""
     echo "Please confirm your username and password."
     echo "Username: $USER"
     echo "Password: $PASSWORD"
     echo "If correct, type 'yes' or 'y' to continue:"
-    read confirmation
+    read confirmation < /dev/tty
     if [[ $confirmation == 'yes' || $confirmation == 'y' || $confirmation == 'Y' ]]
     then
         echo "Confirmed. Proceeding with installation."
