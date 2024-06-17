@@ -78,12 +78,18 @@ user_options() {
     read -p "Enter your choice (1, 2, or 3): " option
     case $option in
         1)
+            get_credentials
+            install_desktop
             setup_chrome
             ;;
         2)
+            get_credentials
+            install_desktop
             setup_rivalz_ai
             ;;
         3)
+            get_credentials
+            install_desktop
             setup_chrome
             setup_rivalz_ai
             ;;
@@ -96,7 +102,5 @@ user_options() {
 
 # Execute functions
 display_social_media
-get_credentials
-install_desktop
 user_options
 display_social_media
