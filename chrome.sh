@@ -1,26 +1,30 @@
 #!/bin/bash
 
-# 定义获取用户名和密码的函数
+# 全局变量定义
+USER=""
+PASSWORD=""
+
 # 定义获取用户名和密码的函数
 get_credentials() {
-    echo "Please enter a username for remote desktop access:"
+    echo -e "\033[0;34mPlease enter a username for remote desktop access:\033[0m"
     read USER < /dev/tty
-    echo "Please enter a password for remote desktop access:"
+    echo -e "\033[0;34mPlease enter a password for remote desktop access:\033[0m"
     read -s PASSWORD < /dev/tty
     echo ""
-    echo "Please confirm your username and password."
+    echo -e "\033[0;33mPlease confirm your username and password.\033[0m"
     echo "Username: $USER"
-    echo "Password: $PASSWORD"
-    echo "If correct, type 'yes' or 'y' to continue:"
+    echo -e "Password: \033[0;31m$PASSWORD\033[0m"
+    echo -e "\033[0;32mIf correct, type 'yes' or 'y' to continue:\033[0m"
     read confirmation < /dev/tty
     if [[ $confirmation == 'yes' || $confirmation == 'y' || $confirmation == 'Y' ]]
     then
-        echo "Confirmed. Proceeding with installation."
+        echo -e "\033[0;32mConfirmed. Proceeding with installation.\033[0m"
     else
-        echo "Confirmation failed. Exiting."
+        echo -e "\033[0;31mConfirmation failed. Exiting.\033[0m"
         exit 1
     fi
 }
+
 
 # 主安装程序
 install_system() {
