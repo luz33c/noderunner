@@ -9,41 +9,37 @@ fi
 
 # Node installation function
 function install_node() {
-
-# Update the system package list
-sudo apt update
-apt install screen -y
-
-# Check if Docker is installed
-if ! command -v docker &> /dev/null
-then
-    # If Docker is not installed, install it
-    echo "Docker not detected, installing..."
-    sudo apt-get install ca-certificates curl gnupg lsb-release
-
-    # Add the official Docker GPG key
-    sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-
-    # Set up the Docker repository
-    echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-    # Authorize the Docker files
-    sudo chmod a+r /etc/apt/keyrings/docker.gpg
-    sudo apt-get update
-
-    # Install the latest version of Docker
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-else
-    echo "Docker is already installed."
-fi
-
 # Get the runtime file
 read -p "Please enter your key device id: " your_device_id < /dev/tty
 
 keyid="$your_device_id"
+# Update the system package list
+sudo apt update
+apt install screen -y
+
+# Install Docker
+if ! command -v docker &> /dev/null
+then
+    echo "Docker not detected, installing..."
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+
+    curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+    if [ "$(lsb_release -is)" = "Debian" ]; then
+        # Debian specific setup
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    elif [ "$(lsb_release -is)" = "Ubuntu" ]; then
+        # Ubuntu specific setup
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    fi
+
+    sudo apt-get update
+    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+else
+    echo "Docker is already installed."
+fi
+
 
 # Download the PINGPONG program
 wget -O PINGPONG https://pingpong-build.s3.ap-southeast-1.amazonaws.com/linux/latest/PINGPONG
